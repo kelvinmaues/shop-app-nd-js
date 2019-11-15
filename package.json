@@ -1,0 +1,20 @@
+{
+  "name": "nodejs-complete-guide",
+  "version": "1.0.0",
+  "description": "Node.js complete guide course",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kelvinmaues/my-nodejs-course.git"
+  },
+  "author": "Kelvin Gaia Maués",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kelvinmaues/my-nodejs-course/issues"
+  },
+  "homepage": "https://github.com/kelvinmaues/my-nodejs-course#readme"
+}
