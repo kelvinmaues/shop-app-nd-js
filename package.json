@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "nodemon node app.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/kelvinmaues/my-nodejs-course/issues"
   },
-  "homepage": "https://github.com/kelvinmaues/my-nodejs-course#readme"
+  "homepage": "https://github.com/kelvinmaues/my-nodejs-course#readme",
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
