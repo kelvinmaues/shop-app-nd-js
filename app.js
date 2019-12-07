@@ -10,10 +10,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // routes
-const adminRoutes = require("./routes/admin");
+const admin = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 
-app.use("/admin", adminRoutes);
+app.use("/admin", admin.routes);
 app.use(shopRoutes);
 
 app.use((req, res, next) => {
