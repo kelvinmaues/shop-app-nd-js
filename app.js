@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const path = require("path");
 
 const app = express();
+app.set("view engine", "pug");
+app.set("views", "views");
 
 // parser
 app.use(bodyParser.urlencoded({ extended: false }));

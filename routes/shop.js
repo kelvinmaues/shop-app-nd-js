@@ -7,8 +7,10 @@ const rootDir = require("../util/path");
 const admin = require("./admin");
 
 router.get("/", (req, res, next) => {
+  const { products } = admin;
   console.log(admin.products);
-  res.sendFile(path.join(rootDir, "views", "shop.html"));
+  // res.sendFile(path.join(rootDir, "views", "shop.html"));
+  res.render("shop", { products, docTitle: "My Shop" });
 });
 
 module.exports = router;
