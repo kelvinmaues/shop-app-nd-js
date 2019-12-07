@@ -6,6 +6,8 @@ const app = express();
 
 // parser
 app.use(bodyParser.urlencoded({ extended: false }));
+// static files
+app.use(express.static(path.join(__dirname, "public")));
 
 // routes
 const adminRoutes = require("./routes/admin");
