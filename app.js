@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 
 // const expressHbs = require("express-handlebars");
-
+const errorController = require("./controllers/error");
 const app = express();
 
 // app.engine(
@@ -30,13 +30,7 @@ const shopRoutes = require("./routes/shop");
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 
-app.use((req, res, next) => {
-  res.status(404).render("404", { pageTitle: "Page not found" });
-});
-// app.use("/products", (req, res, next) => {
-//   res.send("<h1>The product list!</h1>");
-//   next();
-// });
+app.use(errorController.get404);
 
 // SERVER LISTING ON PORT 3000
 app.listen(3000);
