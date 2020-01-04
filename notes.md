@@ -9,10 +9,12 @@
 ## Models
 - Represent your data in your code
 - Work with your data (e.g. save, fetch)
+- Contains data-related logic
 
 ## Views
 - What the users see
 - Decoupled from yout application code
+- Shouldn't contain too much logic
 
 ## Controllers
 - Connecting your *Models* and your *Views*
