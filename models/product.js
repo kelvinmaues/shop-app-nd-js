@@ -1,9 +1,11 @@
-const fs = require("fs");
-const path = require("path");
-const utilPath = require("../util/path");
-const products = [];
+const fs = require('fs');
+const path = require('path');
 
-const p = path.join(utilPath, "data", "products.json");
+const p = path.join(
+  path.dirname(process.mainModule.filename),
+  'data',
+  'products.json'
+);
 
 const getProductsFromFile = cb => {
   fs.readFile(p, (err, fileContent) => {
@@ -31,7 +33,6 @@ module.exports = class Product {
         console.log(err);
       });
     });
-    fs.readFile(p, (err, fileContent) => {});
   }
 
   static fetchAll(cb) {
@@ -40,7 +41,7 @@ module.exports = class Product {
 
   static findById(id, cb) {
     getProductsFromFile(products => {
-      const product = products.find(prod => prod.id === id);
+      const product = products.find(p => p.id === id);
       cb(product);
     });
   }
