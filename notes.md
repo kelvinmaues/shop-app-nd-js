@@ -21,3 +21,8 @@
 - Contains the "in-between" logic
 - Split across Middleware functions
 ### Routes
+
+## Section 9: Dynamic Routes & Advanced Models
+- Passing route params
+- Using query params
+- Enhance our Models
