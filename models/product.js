@@ -1,3 +1,5 @@
+// database pool
+const db = require("../util/database");
 // models
 const Cart = require("./cart");
 
@@ -10,16 +12,13 @@ module.exports = class Product {
     this.price = price;
   }
 
-  save() {
-
-  }
+  save() {}
 
   static fetchAll() {
+    return db.execute("SELECT * FROM products");
   }
 
-  static findById(id) {
-  }
+  static findById(id) {}
 
-  static deleteById(id) {
-  }
+  static deleteById(id) {}
 };
