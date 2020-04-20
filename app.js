@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 
 const errorController = require("./controllers/error");
-const db = require('./util/database');
+const db = require("./util/database");
 const app = express();
 
 // routes
@@ -11,7 +11,13 @@ const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 
 // db connection
-// db.execute();
+db.execute("SELECT * FROM products")
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 app.set("view engine", "ejs");
 app.set("views", "views");
