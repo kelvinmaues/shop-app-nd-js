@@ -19,6 +19,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // static files
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use((req, res, next) => {
+  User.findByPk(1);
+  then((user) => {
+    req.user = user;
+    next();
+  }).catch((err) => console.log(err));
+});
+
+// Set routes
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 
@@ -30,8 +39,17 @@ User.hasMany(Product);
 
 // DB connection to sync models to tables and its relations
 sequelize
-  .sync({ force: true })
-  .then(() => {
+  .sync()
+  .then((res) => {
+    return User.findByPk(1);
+  })
+  .then((user) => {
+    if (!user) {
+      return User.create({ name: "Kelvin", email: "test@test.com" });
+    }
+    return user;
+  })
+  .then((user) => {
     // SERVER LISTING ON PORT 3000
     app.listen(3000);
   })
