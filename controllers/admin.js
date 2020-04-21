@@ -51,15 +51,16 @@ exports.getEditProduct = (req, res, next) => {
 
 exports.postEditProduct = (req, res, next) => {
   const { productId, title, price, imageUrl, description } = req.body;
-  const updatedProduct = new Product(
-    productId,
-    title,
-    imageUrl,
-    description,
-    price
-  );
-  updatedProduct.save();
-  res.redirect("/admin/products");
+  Product.findByPk(productId)
+    .then((product) => {
+      product.title = title;
+      product.price = price;
+      product.description = description;
+      product.imageUrl = imageUrl;
+      return product.save();
+    })
+    .then(() => res.redirect("/admin/products"))
+    .catch((err) => console.log(err));
 };
 
 exports.postDeleteProduct = (req, res, next) => {
