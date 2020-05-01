@@ -6,7 +6,8 @@ const errorController = require("./controllers/error");
 const app = express();
 // database
 const { mongoConnect } = require("./util/database");
-
+// models
+const User = require("./models/user");
 // routes
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
@@ -19,12 +20,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res, next) => {
-  // User.findByPk(1)
-  //   .then((user) => {
-  //     req.user = user;
-  //     next();
-  //   })
-  //   .catch((err) => console.log(err));
+  User.findById("5eac4e86ea397d0eba1a9cc3")
+    .then((user) => {
+      req.user = user;
+      next();
+    })
+    .catch((err) => console.log(err));
   next();
 });
 
