@@ -45,12 +45,20 @@ class Product {
       .catch((err) => console.log(err));
   }
 
-  editProductById(productId) {
+  updateProductById(productId) {
     const db = getDb();
     return db
       .collection("products")
-      .findAndModify({ _id: new mongodb.ObjectID(productId) }, [], this)
-      .then()
+      .updateOne(
+        { _id: new mongodb.ObjectID(productId) },
+        {
+          $set: this,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
       .catch((err) => console.log(err));
   }
 }

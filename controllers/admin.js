@@ -45,19 +45,14 @@ exports.getEditProduct = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-// exports.postEditProduct = (req, res, next) => {
-//   const { productId, title, price, imageUrl, description } = req.body;
-//   Product.findByPk(productId)
-//     .then((product) => {
-//       product.title = title;
-//       product.price = price;
-//       product.description = description;
-//       product.imageUrl = imageUrl;
-//       return product.save();
-//     })
-//     .then(() => res.redirect("/admin/products"))
-//     .catch((err) => console.log(err));
-// };
+exports.postEditProduct = (req, res, next) => {
+  const { productId, title, price, imageUrl, description } = req.body;
+  const product = new Product(title, price, description, imageUrl);
+  product
+    .updateProductById(productId)
+    .then(() => res.redirect("/admin/products"))
+    .catch((err) => console.log(err));
+};
 
 // exports.postDeleteProduct = (req, res, next) => {
 //   const { productId } = req.body;
