@@ -23,29 +23,27 @@ exports.postAddProduct = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-// exports.getEditProduct = (req, res, next) => {
-//   const { edit } = req.query;
-//   const { productId } = req.params;
+exports.getEditProduct = (req, res, next) => {
+  const { edit } = req.query;
+  const { productId } = req.params;
 
-//   if (!edit) {
-//     return res.redirect("/");
-//   }
-//   req.user
-//     .getProducts({ where: { id: productId } })
-//     .then((products) => {
-//       const product = products[0];
-//       if (!product) {
-//         return res.redirect("/");
-//       }
-//       res.render("admin/edit-product", {
-//         pageTitle: "Edit Product",
-//         path: "/admin/edit-product",
-//         editing: edit,
-//         product,
-//       });
-//     })
-//     .catch((err) => console.log(err));
-// };
+  if (!edit) {
+    return res.redirect("/");
+  }
+  Product.findById(productId)
+    .then((product) => {
+      if (!product) {
+        return res.redirect("/");
+      }
+      res.render("admin/edit-product", {
+        pageTitle: "Edit Product",
+        path: "/admin/edit-product",
+        editing: edit,
+        product,
+      });
+    })
+    .catch((err) => console.log(err));
+};
 
 // exports.postEditProduct = (req, res, next) => {
 //   const { productId, title, price, imageUrl, description } = req.body;
@@ -73,15 +71,14 @@ exports.postAddProduct = (req, res, next) => {
 //     .catch((err) => console.log(err));
 // };
 
-// exports.getProducts = (req, res, next) => {
-//   req.user
-//     .getProducts()
-//     .then((products) => {
-//       res.render("admin/products", {
-//         prods: products,
-//         pageTitle: "Admin Products",
-//         path: "/admin/products",
-//       });
-//     })
-//     .catch((err) => console.log(err));
-// };
+exports.getProducts = (req, res, next) => {
+  Product.fetchAll()
+    .then((products) => {
+      res.render("admin/products", {
+        prods: products,
+        pageTitle: "Admin Products",
+        path: "/admin/products",
+      });
+    })
+    .catch((err) => console.log(err));
+};
