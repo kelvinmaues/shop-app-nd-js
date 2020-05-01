@@ -44,6 +44,15 @@ class Product {
       })
       .catch((err) => console.log(err));
   }
+
+  editProductById(productId) {
+    const db = getDb();
+    return db
+      .collection("products")
+      .findAndModify({ _id: new mongodb.ObjectID(productId) }, [], this)
+      .then()
+      .catch((err) => console.log(err));
+  }
 }
 
 module.exports = Product;
