@@ -13,7 +13,7 @@ class User {
   }
 
   static findById(userId) {
-    db = getDb();
+    const db = getDb();
     return db
       .collection("users")
       .findOne({ _id: new mongodb.ObjectID(userId) });
