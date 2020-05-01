@@ -8,12 +8,26 @@ class Product {
     this.imageUrl = imageUrl;
   }
 
+  // Save method to add or insert one product to this collection
   save() {
     const db = getDb();
     return db
       .collection("products")
       .insertOne(this)
       .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }
+
+  static fetchAll() {
+    const db = getDb();
+    return db
+      .collection("products")
+      .find()
+      .toArray()
+      .then((products) => {
+        console.log(products);
+        return products;
+      })
       .catch((err) => console.log(err));
   }
 }
