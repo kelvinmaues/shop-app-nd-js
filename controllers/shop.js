@@ -42,16 +42,12 @@ exports.getCart = (req, res, next) => {
   req.user
     .getCart()
     .then((cart) => {
-      return cart
-        .getProducts()
-        .then((products) => {
-          res.render("shop/cart", {
-            path: "/cart",
-            pageTitle: "Your Cart",
-            products,
-          });
-        })
-        .catch((err) => console.log(err));
+      console.log("cart", cart);
+      res.render("shop/cart", {
+        path: "/cart",
+        pageTitle: "Your Cart",
+        products: cart,
+      });
     })
     .catch((err) => console.log(err));
 };
