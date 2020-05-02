@@ -108,6 +108,14 @@ class User {
       .collection("users")
       .findOne({ _id: new mongodb.ObjectID(userId) });
   }
+
+  getOrders() {
+    const db = getDb();
+    return db
+      .collection("orders")
+      .find({ "user._id": new mongodb.ObjectId(this._id) })
+      .toArray();
+  }
 }
 
 module.exports = User;
