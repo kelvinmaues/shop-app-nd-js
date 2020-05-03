@@ -72,11 +72,11 @@ exports.postEditProduct = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-// exports.postDeleteProduct = (req, res, next) => {
-//   const { productId } = req.body;
-//   Product.deleteById(productId)
-//     .then(() => {
-//       res.redirect("/admin/products");
-//     })
-//     .catch((err) => console.log(err));
-// };
+exports.postDeleteProduct = (req, res, next) => {
+  const { productId } = req.body;
+  Product.findByIdAndRemove(productId)
+    .then(() => {
+      res.redirect("/admin/products");
+    })
+    .catch((err) => console.log(err));
+};
