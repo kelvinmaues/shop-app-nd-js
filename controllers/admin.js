@@ -24,6 +24,18 @@ exports.postAddProduct = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
+exports.getProducts = (req, res, next) => {
+  Product.find()
+    .then((products) => {
+      res.render("admin/products", {
+        prods: products,
+        pageTitle: "Admin Products",
+        path: "/admin/products",
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
 // exports.getEditProduct = (req, res, next) => {
 //   const { edit } = req.query;
 //   const { productId } = req.params;
@@ -60,18 +72,6 @@ exports.postAddProduct = (req, res, next) => {
 //   Product.deleteById(productId)
 //     .then(() => {
 //       res.redirect("/admin/products");
-//     })
-//     .catch((err) => console.log(err));
-// };
-
-// exports.getProducts = (req, res, next) => {
-//   Product.fetchAll()
-//     .then((products) => {
-//       res.render("admin/products", {
-//         prods: products,
-//         pageTitle: "Admin Products",
-//         path: "/admin/products",
-//       });
 //     })
 //     .catch((err) => console.log(err));
 // };
