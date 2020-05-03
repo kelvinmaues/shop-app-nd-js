@@ -52,17 +52,17 @@ exports.getProduct = (req, res, next) => {
 //     .catch((err) => console.log(err));
 // };
 
-// exports.postCart = (req, res, next) => {
-//   const prodId = req.body.productId;
-//   Product.findById(prodId)
-//     .then((product) => {
-//       return req.user.addToCart(product);
-//     })
-//     .then(() => {
-//       res.redirect("/cart");
-//     })
-//     .catch((err) => console.log(err));
-// };
+exports.postCart = (req, res, next) => {
+  const prodId = req.body.productId;
+  Product.findById(prodId)
+    .then((product) => {
+      return req.user.addToCart(product);
+    })
+    .then(() => {
+      res.redirect("/cart");
+    })
+    .catch((err) => console.log(err));
+};
 
 // exports.postCartDeleteProduct = (req, res, next) => {
 //   const { productId } = req.body;
