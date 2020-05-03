@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const errorController = require("./controllers/error");
 const app = express();
 // models
-// const User = require("./models/user");
+const User = require("./models/user");
 // routes
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
@@ -18,14 +18,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // static files
 app.use(express.static(path.join(__dirname, "public")));
 
-// app.use((req, res, next) => {
-//   User.findById("5eac4e86ea397d0eba1a9cc3")
-//     .then((user) => {
-//       req.user = new User(user.name, user.email, user.cart, user._id);
-//       next();
-//     })
-//     .catch((err) => console.log(err));
-// });
+app.use((req, res, next) => {
+  User.findById("5eaefb184f5ea9238fd66b79")
+    .then((user) => {
+      req.user = user;
+      next();
+    })
+    .catch((err) => console.log(err));
+});
 
 // Set routes
 app.use("/admin", adminRoutes);
@@ -41,8 +41,19 @@ mongoose
       useUnifiedTopology: true,
     }
   )
-  .then((res) => {
-    // console.log(res)
+  .then(() => {
+    User.findOne().then((user) => {
+      if (!user) {
+        const user = new User({
+          name: "Kelvin Maues",
+          email: "kelvin@test.com",
+          cart: {
+            items: [],
+          },
+        });
+        user.save();
+      }
+    });
     app.listen(3003);
   })
   .catch((err) => console.log(err));
