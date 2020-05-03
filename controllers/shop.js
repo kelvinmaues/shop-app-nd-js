@@ -38,19 +38,19 @@ exports.getProduct = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-// exports.getCart = (req, res, next) => {
-//   req.user
-//     .getCart()
-//     .then((cart) => {
-//       console.log("cart", cart);
-//       res.render("shop/cart", {
-//         path: "/cart",
-//         pageTitle: "Your Cart",
-//         products: cart,
-//       });
-//     })
-//     .catch((err) => console.log(err));
-// };
+exports.getCart = (req, res, next) => {
+  req.user
+    .populate("cart.items.productId")
+    .execPopulate()
+    .then((user) => {
+      res.render("shop/cart", {
+        path: "/cart",
+        pageTitle: "Your Cart",
+        products: user.cart.items,
+      });
+    })
+    .catch((err) => console.log(err));
+};
 
 exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
