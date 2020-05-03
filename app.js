@@ -8,7 +8,7 @@ const app = express();
 // models
 // const User = require("./models/user");
 // routes
-// const adminRoutes = require("./routes/admin");
+const adminRoutes = require("./routes/admin");
 // const shopRoutes = require("./routes/shop");
 
 app.set("view engine", "ejs");
@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // });
 
 // Set routes
-// app.use("/admin", adminRoutes);
+app.use("/admin", adminRoutes);
 // app.use(shopRoutes);
 
 app.use(errorController.get404);
@@ -42,7 +42,7 @@ mongoose
     }
   )
   .then((res) => {
-    console.log(res)
+    // console.log(res)
     app.listen(3003);
   })
   .catch((err) => console.log(err));
