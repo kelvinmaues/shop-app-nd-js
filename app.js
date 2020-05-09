@@ -3,9 +3,17 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
+
+const MONGO_DB_URI =
+  "mongodb+srv://konoha_ninja:0CEsTnINuRC2JS8s@boruton-kan-sbr93.mongodb.net/shop?retryWrites=true&w=majority";
 
 const errorController = require("./controllers/error");
 const app = express();
+const store = new MongoDBStore({
+  uri: MONGO_DB_URI,
+  collection: "sessions",
+});
 
 // models
 const User = require("./models/user");
@@ -25,7 +33,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // static files
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
-  session({ secret: "my secret", resave: false, saveUninitialized: false })
+  session({
+    secret: "my secret",
+    resave: false,
+    saveUninitialized: false,
+    store,
+  })
 );
 
 app.use((req, res, next) => {
@@ -45,13 +58,10 @@ app.use(authRoutes);
 app.use(errorController.get404);
 
 mongoose
-  .connect(
-    "mongodb+srv://konoha_ninja:0CEsTnINuRC2JS8s@boruton-kan-sbr93.mongodb.net/shop?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(MONGO_DB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     User.findOne().then((user) => {
       if (!user) {
