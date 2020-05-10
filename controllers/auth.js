@@ -39,19 +39,20 @@ exports.postSignup = (req, res, next) => {
       if (resp) {
         return res.redirect("/signup");
       }
-      return bcrypt.hash(password, 12);
-    })
-    .then((hashResponse) => {
-      const user = new User({
-        name,
-        email,
-        password: hashResponse,
-        cart: { items: [] },
-      });
-      return user.save();
-    })
-    .then(() => {
-      res.redirect("/login");
+      return bcrypt
+        .hash(password, 12)
+        .then((hashResponse) => {
+          const user = new User({
+            name,
+            email,
+            password: hashResponse,
+            cart: { items: [] },
+          });
+          return user.save();
+        })
+        .then(() => {
+          res.redirect("/login");
+        });
     })
     .catch((err) => console.log(err));
 };
