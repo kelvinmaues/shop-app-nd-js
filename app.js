@@ -4,6 +4,8 @@ const path = require("path");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+// models
+const User = require("./models/user");
 
 const MONGO_DB_URI =
   "mongodb+srv://konoha_ninja:0CEsTnINuRC2JS8s@boruton-kan-sbr93.mongodb.net/shop?retryWrites=true&w=majority";
@@ -15,17 +17,14 @@ const store = new MongoDBStore({
   collection: "sessions",
 });
 
-// models
-const User = require("./models/user");
+// view engine
+app.set("view engine", "ejs");
+app.set("views", "views");
 
 // routes
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const authRoutes = require("./routes/auth");
-
-// view engine
-app.set("view engine", "ejs");
-app.set("views", "views");
 
 // ==> MIDDLEWARES
 // parser
@@ -37,13 +36,13 @@ app.use(
     secret: "my secret",
     resave: false,
     saveUninitialized: false,
-    store,
+    store: store,
   })
 );
 
 app.use((req, res, next) => {
   if (!req.session.user) {
-    next();
+    return next();
   }
   User.findById(req.session.user._id)
     .then((user) => {
