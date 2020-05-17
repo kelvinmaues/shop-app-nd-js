@@ -6,11 +6,13 @@ const router = express.Router();
 
 router.get("/login", authController.getLogin);
 
+router.get("/signup", authController.getSignup);
+
 router.get("/reset-password", authController.getResetPassword);
 
-router.post("/reset-password", authController.postResetPassword);
+router.get("/new-password/:token", authController.getNewPassword);
 
-router.get("/signup", authController.getSignup);
+router.post("/reset-password", authController.postResetPassword);
 
 router.post("/login", authController.postLogin);
 
