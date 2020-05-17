@@ -101,3 +101,12 @@ exports.postLogout = (req, res, next) => {
     res.redirect("/");
   });
 };
+
+exports.getResetPassword = (req, res, next) => {
+  const errMsg = req.flash("error");
+  res.render("auth/reset", {
+    path: "/reset-password",
+    pageTitle: "Reset Password",
+    errorMessage: errMsg.length > 0 ? errMsg : null,
+  });
+};
