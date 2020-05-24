@@ -18,7 +18,16 @@ router.post("/new-password", authController.postNewPassword);
 
 router.post("/reset-password", authController.postResetPassword);
 
-router.post("/login", authController.postLogin);
+router.post(
+  "/login",
+  [
+    check("email").isEmail().withMessage("Invalid e-mail address!"),
+    check("password", "Pls, enter a valid password")
+      .isLength({ min: 5 })
+      .isAlphanumeric(),
+  ],
+  authController.postLogin
+);
 
 router.post(
   "/signup",
