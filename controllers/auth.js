@@ -63,7 +63,7 @@ exports.postLogin = (req, res, next) => {
 };
 
 exports.postSignup = (req, res, next) => {
-  const { name, email, password, confirmPassword } = req.body;
+  const { name, email, password } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors.array());
@@ -73,34 +73,28 @@ exports.postSignup = (req, res, next) => {
       errorMessage: errors.array()[0].msg,
     });
   }
-  User.findOne({ email: email })
-    .then((resp) => {
-      if (resp) {
-        req.flash("error", "E-mail exists already.");
-        return res.redirect("/signup");
-      }
-      return bcrypt
-        .hash(password, 12)
-        .then((hashResponse) => {
-          const user = new User({
-            name,
-            email,
-            password: hashResponse,
-            cart: { items: [] },
-          });
-          return user.save();
+
+  bcrypt
+    .hash(password, 12)
+    .then((hashResponse) => {
+      const user = new User({
+        name,
+        email,
+        password: hashResponse,
+        cart: { items: [] },
+      });
+      return user.save();
+    })
+    .then(() => {
+      res.redirect("/login");
+      return transporter
+        .sendMail({
+          to: email,
+          from: "kgmdeveloper@gmail.com",
+          subject: "Welcome to Shop",
+          html: "<h1>You successfully signed up!</h1>",
         })
-        .then(() => {
-          res.redirect("/login");
-          return transporter
-            .sendMail({
-              to: email,
-              from: "kgmdeveloper@gmail.com",
-              subject: "Welcome to Shop",
-              html: "<h1>You successfully signed up!</h1>",
-            })
-            .catch((err) => console.log(err));
-        });
+        .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
 };
