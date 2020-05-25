@@ -36,10 +36,6 @@ router.post(
       .isEmail()
       .withMessage("Invalid e-mail, pls enter a valid e-mail")
       .custom((value, { req }) => {
-        // if (value === "test@test.com") {
-        //   throw new Error("This e-mail is forbidden");
-        // }
-        // return true;
         return User.findOne({ email: value }).then((resp) => {
           if (resp) {
             return Promise.reject("E-mail already existis!");
