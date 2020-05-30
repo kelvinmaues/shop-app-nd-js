@@ -15,7 +15,8 @@
         <form class="login-form" action="/login" method="POST">
             <div class="form-control">
                 <label for="email">E-mail</label>
-                <input 
+                <input
+                    class="<%= validationErrors.find(({ param }) => param === 'email') ? 'invalid' : '' %>"
                     type="email" 
                     name="email" 
                     id="email"
@@ -25,6 +26,7 @@
             <div class="form-control">
                 <label for="password">Password</label>
                 <input 
+                    class="<%= validationErrors.find(({ param }) => param === 'password') ? 'invalid' : '' %>"
                     type="password" 
                     name="password" 
                     id="password"
