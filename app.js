@@ -6,6 +6,7 @@ const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const csurf = require("csurf");
 const flash = require("connect-flash");
+const multer = require("multer");
 
 // models
 const User = require("./models/user");
@@ -33,6 +34,8 @@ const authRoutes = require("./routes/auth");
 // ==> MIDDLEWARES
 // parser text data
 app.use(bodyParser.urlencoded({ extended: false }));
+// parser files
+app.use(multer({ dest: "images" }).single("image"));
 // static files
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
