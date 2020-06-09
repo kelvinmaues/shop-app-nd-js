@@ -31,7 +31,7 @@ const shopRoutes = require("./routes/shop");
 const authRoutes = require("./routes/auth");
 
 // ==> MIDDLEWARES
-// parser
+// parser text data
 app.use(bodyParser.urlencoded({ extended: false }));
 // static files
 app.use(express.static(path.join(__dirname, "public")));
