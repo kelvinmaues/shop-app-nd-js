@@ -22,12 +22,20 @@ const store = new MongoDBStore({
 });
 const csurfProtection = csurf();
 
+const fileFilter = (req, file, cb) => {
+  if (["image/png", "image/jpg", "image/jpeg"].includes(file.mimetype)) {
+    return cb(null, true);
+  }
+  return cb(null, false);
+};
+
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "images");
   },
   filename: (req, file, cb) => {
-    cb(null, `${new Date().toISOString}-${file.originalname}`);
+    const date = new Date().toISOString();
+    cb(null, `${date}}-${file.originalname}`);
   },
 });
 
@@ -44,7 +52,7 @@ const authRoutes = require("./routes/auth");
 // parser text data
 app.use(bodyParser.urlencoded({ extended: false }));
 // parser files
-app.use(multer({ storage: fileStorage }).single("image"));
+app.use(multer({ storage: fileStorage, fileFilter }).single("image"));
 // static files
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
